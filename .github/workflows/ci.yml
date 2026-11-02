@@ -4,7 +4,6 @@ permissions: { contents: read, id-token: write }
 jobs:
   test:
     runs-on: ubuntu-latest
-    env: { CDK_DEFAULT_ACCOUNT: "123456789012", CDK_DEFAULT_REGION: us-east-1 }
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -21,3 +20,5 @@ jobs:
         run: |
           npx --yes aws-cdk@latest synth -q
           python -c "from archguard.parser import parse_path; from archguard.rules import scan; f=scan(parse_path('cdk.out/ArchGuard.template.json')); print(f); raise SystemExit(1 if f else 0)"
+    env: { CDK_DEFAULT_ACCOUNT: "123456789012", CDK_DEFAULT_REGION: us-east-1 }
+  # deploy: add a job using aws-actions/configure-aws-credentials with OIDC (no long-lived keys), then `cdk deploy`.
