@@ -1,4 +1,6 @@
-# ArchGuard — AI Well-Architected Reviewer on Amazon Bedrock AgentCore
+# Koththalam / ArchGuard (கொத்தளம்) — AI Well-Architected Reviewer on Amazon Bedrock AgentCore
+
+*Koththalam* (கொத்தளம்) is Tamil for a fortress watchtower: the lookout that spots weaknesses before attackers do. *ArchGuard* is the engineering name used in code, package and stack names.
 
 Upload a CloudFormation / CDK-synth / Terraform-plan document. ArchGuard returns a Well-Architected
 review: findings mapped to pillars and best-practice IDs, a before/after cost estimate, and a

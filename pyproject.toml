@@ -1,7 +1,7 @@
 [project]
 name = "archguard"
 version = "0.1.0"
-description = "AI Well-Architected reviewer on Amazon Bedrock AgentCore"
+description = "Koththalam / ArchGuard: AI Well-Architected reviewer on Amazon Bedrock AgentCore"
 requires-python = ">=3.11"
 dependencies = ["pyyaml"]
 
