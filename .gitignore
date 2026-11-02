@@ -1,0 +1,8 @@
+__pycache__/
+*.pyc
+build/
+cdk.out/
+.venv/
+node_modules/
+benchmark/results.json
+.pytest_cache/
