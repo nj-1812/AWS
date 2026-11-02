@@ -1,0 +1,5 @@
+{
+  "app": "python3 infra/app.py",
+  "watch": { "include": ["infra/**", "src/**", "api_handlers/**", "agents/**"] },
+  "context": { "alert_email": "you@example.com", "budget_usd": 25 }
+}

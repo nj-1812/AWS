@@ -1,0 +1,7 @@
+Resources:
+  Sg:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: v6 rdp
+      SecurityGroupIngress:
+        - {IpProtocol: tcp, FromPort: 3389, ToPort: 3389, CidrIpv6: "::/0"}

@@ -1,0 +1,12 @@
+Parameters:
+  Public: {Type: String, Default: "true"}
+Resources:
+  Db:
+    Type: AWS::RDS::DBInstance
+    Properties:
+      DBInstanceClass: db.t3.micro
+      Engine: mysql
+      StorageEncrypted: true
+      MultiAZ: true
+      BackupRetentionPeriod: 7
+      PubliclyAccessible: !Ref Public

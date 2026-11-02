@@ -1,0 +1,7 @@
+Resources:
+  Sg:
+    Type: AWS::EC2::SecurityGroup
+    Properties: {GroupDescription: base}
+  SshRule:
+    Type: AWS::EC2::SecurityGroupIngress
+    Properties: {GroupId: !Ref Sg, IpProtocol: tcp, FromPort: 22, ToPort: 22, CidrIp: 0.0.0.0/0}

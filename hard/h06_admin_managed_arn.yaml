@@ -1,0 +1,6 @@
+Resources:
+  Role:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument: {Version: '2012-10-17', Statement: []}
+      ManagedPolicyArns: ["arn:aws:iam::aws:policy/AdministratorAccess"]

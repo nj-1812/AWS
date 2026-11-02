@@ -1,0 +1,9 @@
+{
+ "h01_sg_range.yaml": [["SG-001","Sg"]],
+ "h02_sg_ipv6.yaml": [["SG-001","Sg"]],
+ "h03_iam_lists.yaml": [["IAM-001","Pol"]],
+ "h04_sg_separate_rule.yaml": [["SG-001","SshRule"]],
+ "h05_param_public_db.yaml": [["RDS-003","Db"]],
+ "h06_admin_managed_arn.yaml": [["IAM-003","Role"]],
+ "h07_clean_control.yaml": []
+}

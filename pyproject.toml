@@ -1,0 +1,18 @@
+[project]
+name = "archguard"
+version = "0.1.0"
+description = "AI Well-Architected reviewer on Amazon Bedrock AgentCore"
+requires-python = ">=3.11"
+dependencies = ["pyyaml"]
+
+[project.optional-dependencies]
+agents = ["strands-agents", "bedrock-agentcore", "boto3", "mcp"]
+infra = ["aws-cdk-lib>=2.275", "constructs"]
+dev = ["pytest"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]

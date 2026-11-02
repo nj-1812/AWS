@@ -1,0 +1,73 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Resources:
+  DataBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+        - ServerSideEncryptionByDefault:
+            SSEAlgorithm: aws:kms
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
+      VersioningConfiguration:
+        Status: Enabled
+  WebSG:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: web
+      SecurityGroupIngress:
+      - IpProtocol: tcp
+        FromPort: 443
+        ToPort: 443
+        CidrIp: 0.0.0.0/0
+  AppDb:
+    Type: AWS::RDS::DBInstance
+    Properties:
+      DBInstanceClass: db.m5.large
+      Engine: mysql
+      StorageEncrypted: false
+      MultiAZ: true
+      PubliclyAccessible: false
+      BackupRetentionPeriod: 7
+  AppVol:
+    Type: AWS::EC2::Volume
+    Properties:
+      AvailabilityZone: us-east-1a
+      Size: 100
+      VolumeType: gp3
+      Encrypted: true
+  AppServer:
+    Type: AWS::EC2::Instance
+    Properties:
+      InstanceType: m6g.large
+  Table:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      PointInTimeRecoverySpecification:
+        PointInTimeRecoveryEnabled: true
+  Fn:
+    Type: AWS::Lambda::Function
+    Properties:
+      TracingConfig:
+        Mode: Active
+  WorkQueue:
+    Type: AWS::SQS::Queue
+    Properties:
+      RedrivePolicy:
+        deadLetterTargetArn: arn:aws:sqs:us-east-1:123456789012:dlq
+        maxReceiveCount: 3
+  AppRole:
+    Type: AWS::IAM::Role
+    Properties:
+      Policies:
+      - PolicyName: scoped
+        PolicyDocument:
+          Version: '2012-10-17'
+          Statement:
+          - Effect: Allow
+            Action:
+            - s3:GetObject
+            Resource: arn:aws:s3:::my-bucket/*
