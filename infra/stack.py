@@ -30,7 +30,8 @@ def _str(desc):
 
 
 class ArchGuardStack(Stack):
-    def __init__(self, scope: Construct, cid: str, *, alert_email: str, monthly_budget_usd: float, **kw):
+    def __init__(self, scope: Construct, cid: str, *, alert_email: str, monthly_budget_usd: float,
+                 supervisor_model: str, specialist_model: str, **kw):
         super().__init__(scope, cid, **kw)
 
         # ------------------------------------------------------------------ security foundations
@@ -122,6 +123,8 @@ class ArchGuardStack(Stack):
                 idle_runtime_session_timeout=Duration.minutes(10), max_lifetime=Duration.hours(1)),
             environment_variables={
                 "AWS_REGION": self.region,
+                "ARCHGUARD_SUPERVISOR_MODEL": supervisor_model,
+                "ARCHGUARD_SPECIALIST_MODEL": specialist_model,
                 "ARCHGUARD_GUARDRAIL_ID": guardrail.attr_guardrail_id,
                 "ARCHGUARD_GUARDRAIL_VERSION": guardrail_version.attr_version,
             },
