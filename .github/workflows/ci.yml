@@ -1,0 +1,23 @@
+name: ci
+on: [push, pull_request]
+permissions: { contents: read, id-token: write }
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    env: { CDK_DEFAULT_ACCOUNT: "123456789012", CDK_DEFAULT_REGION: us-east-1 }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.13", cache: pip }
+      - uses: actions/setup-node@v4
+        with: { node-version: "22" }
+      - run: pip install -e ".[agents,infra,dev]"
+      - run: python benchmark/generate.py --n 40 --seed 7
+      - run: pytest -q
+      - name: Benchmark quality gate (fails below F1 0.95)
+        run: python -m archguard.evaluate benchmark/generated
+      - run: bash scripts/build_lambda.sh
+      - name: CDK synth + dogfood (scanner must report 0 findings on its own stack)
+        run: |
+          npx --yes aws-cdk@latest synth -q
+          python -c "from archguard.parser import parse_path; from archguard.rules import scan; f=scan(parse_path('cdk.out/ArchGuard.template.json')); print(f); raise SystemExit(1 if f else 0)"
